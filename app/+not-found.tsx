@@ -4,15 +4,12 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function NotFoundScreen() {
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: 'Page Not Found' }} />
+      <Stack.Screen options={{ title: 'Page not found' }} />
 
-      <Text style={styles.title}>Oops!</Text>
-      <Text style={styles.message}>
-        This screen does not exist.
-      </Text>
+      <Text style={styles.title}>Page not found</Text>
 
       <Link href="/" style={styles.link}>
-        Go back to home screen!
+        Go home
       </Link>
     </View>
   );
@@ -29,10 +26,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 12,
-  },
-  message: {
-    fontSize: 16,
     marginBottom: 20,
   },
   link: {

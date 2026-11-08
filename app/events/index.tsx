@@ -29,9 +29,13 @@ export default function EventsScreen() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.savedCount}>
+        Long-press an event to save it. Saved: {savedIds.length}
+      </Text>
+
       <TextInput
         style={styles.search}
-        placeholder="Search events..."
+        placeholder="Search events"
         value={search}
         onChangeText={setSearch}
       />
@@ -68,6 +72,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+  },
+  savedCount: {
+    fontSize: 14,
+    marginHorizontal: 16,
+    marginTop: 12,
+    marginBottom: 4,
+    color: '#555',
   },
   search: {
     backgroundColor: '#fff',

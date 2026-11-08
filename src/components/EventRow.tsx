@@ -16,6 +16,7 @@ export default function EventRow({
     <Pressable
       onPress={onPress}
       onLongPress={onLongPress}
+      delayLongPress={500}
       style={({ pressed }) => [
         styles.card,
         pressed && styles.cardPressed,
@@ -45,8 +46,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cardPressed: {
-    backgroundColor: '#dbeafe',
+    backgroundColor: '#bfdbfe',
     borderColor: '#2563eb',
+    opacity: 0.75,
+    transform: [{ scale: 0.98 }],
   },
   info: {
     gap: 5,
