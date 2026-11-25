@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   Pressable,
   RefreshControl,
@@ -41,6 +42,7 @@ export default function EventsScreen() {
   if (isLoading) {
     return (
       <View style={styles.center}>
+        <ActivityIndicator size="large" color="#2563eb" />
         <Text style={styles.message}>Loading events...</Text>
       </View>
     );
@@ -124,6 +126,7 @@ const styles = StyleSheet.create({
   message: {
     fontSize: 18,
     color: '#555',
+    marginTop: 10,
   },
   errorTitle: {
     fontSize: 20,
