@@ -12,11 +12,12 @@ import {
 } from 'react-native';
 import { router } from 'expo-router';
 import { useEvents } from '../../src/hooks/useEvents';
+import { useSavedIds } from '../../src/hooks/useSavedIds';
 import EventRow from '../../src/components/EventRow';
 
 export default function EventsScreen() {
   const [search, setSearch] = useState('');
-  const [savedIds, setSavedIds] = useState<number[]>([]);
+  const { savedIds, toggleSaved } = useSavedIds();
 
   const {
     data: events = [],
@@ -30,14 +31,6 @@ export default function EventsScreen() {
   const filteredEvents = events.filter((event) =>
     event.title.toLowerCase().includes(search.toLowerCase())
   );
-
-  const toggleSaved = (id: number) => {
-    setSavedIds((current) =>
-      current.includes(id)
-        ? current.filter((savedId) => savedId !== id)
-        : [...current, id]
-    );
-  };
 
   if (isLoading) {
     return (
@@ -65,7 +58,7 @@ export default function EventsScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.savedCount}>
-        Long-press an event to save it. Saved: {savedIds.length}
+        Swipe or long-press an event to save it. Saved: {savedIds.length}
       </Text>
 
       <TextInput
@@ -79,21 +72,17 @@ export default function EventsScreen() {
         data={filteredEvents}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
-          <View>
-            <EventRow
-              event={item}
-              onPress={() =>
-                router.push({
-                  pathname: '/events/[id]',
-                  params: { id: String(item.id) },
-                })
-              }
-              onLongPress={() => toggleSaved(item.id)}
-            />
-            {savedIds.includes(item.id) && (
-              <Text style={styles.saved}>★ Saved</Text>
-            )}
-          </View>
+          <EventRow
+            event={item}
+            saved={savedIds.includes(item.id)}
+            onPress={() =>
+              router.push({
+                pathname: '/events/[id]',
+                params: { id: String(item.id) },
+              })
+            }
+            onToggleSaved={() => toggleSaved(item.id)}
+          />
         )}
         ListEmptyComponent={
           <Text style={styles.empty}>No events match</Text>
@@ -165,12 +154,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
     fontSize: 16,
-  },
-  saved: {
-    color: '#16a34a',
-    fontWeight: 'bold',
-    marginLeft: 24,
-    marginBottom: 8,
   },
   empty: {
     textAlign: 'center',
