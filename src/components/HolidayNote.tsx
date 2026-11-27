@@ -12,11 +12,11 @@ export default function HolidayNote({ date }: HolidayNoteProps) {
   const { data: holidays, isPending, isError } = useHolidays(year);
 
   if (isPending) {
-    return <Text>Checking holidays while pending</Text>;
+    return <Text>Checking holidays</Text>;
   }
 
   if (isError) {
-    return <Text>Holidays unavailable on an error</Text>;
+    return <Text>Holidays unavailable</Text>;
   }
 
   const holiday = holidays?.find((item) => item.date === date);
